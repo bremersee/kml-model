@@ -26,51 +26,44 @@ import org.bremersee.xml.JaxbContextDataProvider;
  *
  * @author Christian Bremer
  */
+@SuppressWarnings("unused")
 public class KmlJaxbContextDataProvider implements JaxbContextDataProvider {
 
   /**
    * The KML XML name space.
    */
-  @SuppressWarnings("WeakerAccess")
   public static final String KML_NS = "http://www.opengis.net/kml/2.2";
 
   /**
    * The name space of google's kml extension.
    */
-  @SuppressWarnings("WeakerAccess")
   public static final String KML_GX_NS = "http://www.google.com/kml/ext/2.2";
 
   /**
    * Name spache of xAL: eXtensible Address Language
    */
-  @SuppressWarnings("WeakerAccess")
   public static final String XAL_NS = "urn:oasis:names:tc:ciq:xsdschema:xAL:2.0";
 
   /**
    * Name space of w3.org Atom
    */
-  @SuppressWarnings("WeakerAccess")
   public static final String ATOM_NS = "http://www.w3.org/2005/Atom";
 
   @Override
   public Collection<JaxbContextData> getJaxbContextData() {
     return Arrays.asList(
         new JaxbContextData(
-            KML_NS,
-            "http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd",
-            org.bremersee.opengis.kml.v22.ObjectFactory.class.getPackage().getName()),
+            org.bremersee.opengis.kml.v22.ObjectFactory.class.getPackage(),
+            "http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd"),
         new JaxbContextData(
-            KML_GX_NS,
-            "https://developers.google.com/kml/schema/kml22gx.xsd",
-            org.bremersee.google.kml.v22.ext.ObjectFactory.class.getPackage().getName()),
+            org.bremersee.google.kml.v22.ext.ObjectFactory.class.getPackage(),
+            "https://developers.google.com/kml/schema/kml22gx.xsd"),
         new JaxbContextData(
-            XAL_NS,
-            "http://docs.oasis-open.org/election/external/xAL.xsd",
-            org.bremersee.oasis.xal.ObjectFactory.class.getPackage().getName()),
+            org.bremersee.oasis.xal.ObjectFactory.class.getPackage(),
+            "http://docs.oasis-open.org/election/external/xAL.xsd"),
         new JaxbContextData(
-            ATOM_NS,
-            "http://schemas.opengis.net/kml/2.2.0/atom-author-link.xsd",
-            org.bremersee.w3c.atom.ObjectFactory.class.getPackage().getName()));
+            org.bremersee.w3c.atom.ObjectFactory.class.getPackage(),
+            "http://schemas.opengis.net/kml/2.2.0/atom-author-link.xsd"));
   }
 
 }
