@@ -16,20 +16,23 @@
 
 package org.bremersee.kml.v22;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.StringWriter;
 import java.util.ServiceLoader;
 import javax.xml.bind.JAXBException;
 import org.bremersee.opengis.kml.v22.Kml;
 import org.bremersee.xml.JaxbContextBuilder;
 import org.bremersee.xml.JaxbContextDataProvider;
 import org.bremersee.xml.SchemaMode;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.ResourceLoader;
 
 /**
- * XML schema test.
+ * Jaxb context builder test.
  *
  * @author Christian Bremer
  */
@@ -40,10 +43,10 @@ class JaxbContextBuilderTest {
   private static JaxbContextBuilder jaxbContextBuilder;
 
   /**
-   * Create jaxb context.
+   * Create jaxb context builder.
    */
   @BeforeAll
-  static void createJaxbContext() {
+  static void createJaxbContextBuilder() {
     jaxbContextBuilder = JaxbContextBuilder.builder()
         .withSchemaMode(SchemaMode.ALWAYS)
         .processAll(ServiceLoader.load(JaxbContextDataProvider.class));
@@ -57,11 +60,18 @@ class JaxbContextBuilderTest {
   @Test
   void testKml() throws Exception {
 
+    assertTrue(jaxbContextBuilder.canMarshal(Kml.class));
+    assertTrue(jaxbContextBuilder.canUnmarshal(Kml.class));
+
     Kml kml = (Kml) jaxbContextBuilder
         .buildUnmarshaller()
         .unmarshal(RESOURCE_LOADER.getResource("classpath:KML_Samples.kml").getInputStream());
 
-    Assertions.assertNotNull(kml);
+    assertNotNull(kml);
+
+    jaxbContextBuilder
+        .buildMarshaller(kml)
+        .marshal(kml, new StringWriter());
   }
 
 }
