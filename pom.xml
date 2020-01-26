@@ -7,19 +7,20 @@
   <parent>
     <groupId>org.bremersee</groupId>
     <artifactId>common-parent</artifactId>
-    <version>1.0.11</version>
+    <version>1.1.2</version>
     <relativePath/>
   </parent>
 
   <artifactId>kml-model</artifactId>
-  <version>2.2.1</version>
+  <version>2.2.2</version>
   <name>OpenGIS KML Model</name>
   <url>https://github.com/bremersee/kml-model</url>
 
   <properties>
     <github.repo>kml-model</github.repo>
     <gh-pages-staging-dir>${project.build.directory}/staging</gh-pages-staging-dir>
-    <common-model.version>1.1.7</common-model.version>
+
+    <common-xml.version>1.0.1</common-xml.version>
   </properties>
 
   <scm>
@@ -49,12 +50,18 @@
   <dependencies>
     <dependency>
       <groupId>org.bremersee</groupId>
-      <artifactId>common-model</artifactId>
-      <version>${common-model.version}</version>
+      <artifactId>common-xml</artifactId>
+      <version>${common-xml.version}</version>
     </dependency>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -79,9 +86,60 @@
           <include>**</include>
         </includes>
       </resource>
+      <resource>
+        <directory>src/main/xsd</directory>
+        <targetPath>META-INF/JAXB/xsd</targetPath>
+        <filtering>false</filtering>
+        <includes>
+          <include>*.xsd</include>
+        </includes>
+      </resource>
     </resources>
 
     <plugins>
+      <plugin>
+        <groupId>org.jvnet.jaxb2.maven2</groupId>
+        <artifactId>maven-jaxb2-plugin</artifactId>
+        <version>0.14.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <extension>true</extension>
+          <args>
+            <arg>-Xinheritance</arg>
+          </args>
+          <schemaDirectory>src/main/xsd</schemaDirectory>
+          <bindingDirectory>src/main/xjb</bindingDirectory>
+          <generateDirectory>${project.build.directory}/generated-sources/jaxb</generateDirectory>
+          <locale>en_GB</locale>
+          <plugins>
+            <plugin>
+              <groupId>org.jvnet.jaxb2_commons</groupId>
+              <artifactId>jaxb2-basics</artifactId>
+              <version>0.11.1</version>
+            </plugin>
+          </plugins>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-jxc-jdk9</artifactId>
+            <version>2.3.0.1</version>
+          </dependency>
+          <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>javax.activation-api</artifactId>
+            <version>1.2.0</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+
+      <!--
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>jaxb2-maven-plugin</artifactId>
@@ -101,7 +159,20 @@
           </xsdPathWithinArtifact>
           <locale>en_GB</locale>
         </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-jxc-jdk9</artifactId>
+            <version>2.3.0.1</version>
+          </dependency>
+          <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>javax.activation-api</artifactId>
+            <version>1.2.0</version>
+          </dependency>
+        </dependencies>
       </plugin>
+      -->
     </plugins>
   </build>
   
