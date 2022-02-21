@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 the original author or authors.
+ * Copyright 2019-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,12 @@
 
 package org.bremersee.kml.v22;
 
-import java.util.Arrays;
+import static org.bremersee.xml.JaxbContextMember.byPackage;
+
 import java.util.Collection;
-import org.bremersee.xml.JaxbContextData;
+import java.util.List;
 import org.bremersee.xml.JaxbContextDataProvider;
+import org.bremersee.xml.JaxbContextMember;
 
 /**
  * KML jaxb context data provider.
@@ -50,20 +52,21 @@ public class KmlJaxbContextDataProvider implements JaxbContextDataProvider {
   public static final String ATOM_NS = "http://www.w3.org/2005/Atom";
 
   @Override
-  public Collection<JaxbContextData> getJaxbContextData() {
-    return Arrays.asList(
-        new JaxbContextData(
-            org.bremersee.opengis.kml.v22.ObjectFactory.class.getPackage(),
-            "http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd"),
-        new JaxbContextData(
-            org.bremersee.google.kml.v22.ext.ObjectFactory.class.getPackage(),
-            "https://developers.google.com/kml/schema/kml22gx.xsd"),
-        new JaxbContextData(
-            org.bremersee.oasis.xal.ObjectFactory.class.getPackage(),
-            "http://docs.oasis-open.org/election/external/xAL.xsd"),
-        new JaxbContextData(
-            org.bremersee.w3c.atom.ObjectFactory.class.getPackage(),
-            "http://schemas.opengis.net/kml/2.2.0/atom-author-link.xsd"));
+  public Collection<JaxbContextMember> getJaxbContextData() {
+    return List.of(
+        byPackage(org.bremersee.opengis.kml.v22.ObjectFactory.class.getPackage())
+            .schemaLocation("http://schemas.opengis.net/kml/2.2.0/ogckml22.xsd")
+            .build(),
+        byPackage(org.bremersee.google.kml.v22.ext.ObjectFactory.class.getPackage())
+            .schemaLocation("https://developers.google.com/kml/schema/kml22gx.xsd")
+            .build(),
+        byPackage(org.bremersee.oasis.xal.ObjectFactory.class.getPackage())
+            .schemaLocation("http://docs.oasis-open.org/election/external/xAL.xsd")
+            .build(),
+        byPackage(org.bremersee.w3c.atom.ObjectFactory.class.getPackage())
+            .schemaLocation("http://schemas.opengis.net/kml/2.2.0/atom-author-link.xsd")
+            .build()
+    );
   }
 
 }

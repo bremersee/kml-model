@@ -7,21 +7,48 @@
   <parent>
     <groupId>org.bremersee</groupId>
     <artifactId>common-parent</artifactId>
-    <version>1.1.2</version>
+    <version>2.4.0</version>
     <relativePath/>
   </parent>
 
   <artifactId>kml-model</artifactId>
   <version>2.2.3-SNAPSHOT</version>
   <name>OpenGIS KML Model</name>
+  <inceptionYear>2019</inceptionYear>
   <url>https://github.com/bremersee/kml-model</url>
 
   <properties>
     <github.repo>kml-model</github.repo>
     <gh-pages-staging-dir>${project.build.directory}/staging</gh-pages-staging-dir>
 
-    <common-xml.version>1.0.1</common-xml.version>
+    <common-xml.version>2.5.0-SNAPSHOT</common-xml.version>
   </properties>
+
+  <developers>
+    <developer>
+      <id>bremersee</id>
+      <name>Christian Bremer</name>
+      <organization>bremersee.org</organization>
+      <organizationUrl>https://bremersee.org</organizationUrl>
+      <email>christian@bremersee.org</email>
+      <timezone>+1</timezone>
+      <roles>
+        <role>Developer</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <organization>
+    <name>bremersee.org</name>
+    <url>https://bremersee.org</url>
+  </organization>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+    </license>
+  </licenses>
 
   <scm>
     <url>https://github.com/bremersee/kml-model</url>
@@ -50,7 +77,7 @@
   <dependencies>
     <dependency>
       <groupId>org.bremersee</groupId>
-      <artifactId>common-xml</artifactId>
+      <artifactId>common-xml-adapter</artifactId>
       <version>${common-xml.version}</version>
     </dependency>
     <dependency>
@@ -59,6 +86,12 @@
       <scope>runtime</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.bremersee</groupId>
+      <artifactId>common-xml</artifactId>
+      <version>${common-xml.version}</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
@@ -175,5 +208,5 @@
       -->
     </plugins>
   </build>
-  
+
 </project>
