@@ -3,15 +3,19 @@ pipeline {
     label 'maven'
   }
   environment {
-    CODECOV_TOKEN = credentials('gpx-model-codecov-token')
+    CODECOV_TOKEN = credentials('kml-model-codecov-token')
+    TEST = true
     DEPLOY = true
     SNAPSHOT_SITE = true
     RELEASE_SITE = true
     DEPLOY_FEATURE = true
   }
   tools {
-    jdk 'jdk11'
+    jdk 'jdk17'
     maven 'm3'
+  }
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '8', artifactNumToKeepStr: '8'))
   }
   stages {
     stage('Tools') {
@@ -22,12 +26,18 @@ pipeline {
     }
     stage('Test') {
       when {
-        not {
-          branch 'feature/*'
-        }
+        environment name: 'TEST', value: 'true'
       }
       steps {
         sh 'mvn -B clean test'
+      }
+      post {
+        always {
+          junit '**/surefire-reports/*.xml'
+          jacoco(
+              execPattern: '**/coverage-reports/*.exec'
+          )
+        }
       }
     }
     stage('Deploy') {
@@ -47,12 +57,20 @@ pipeline {
     stage('Snapshot Site') {
       when {
         allOf {
-          branch 'develop'
           environment name: 'SNAPSHOT_SITE', value: 'true'
+          anyOf {
+            branch 'develop'
+            branch 'feature/*'
+          }
         }
       }
       steps {
         sh 'mvn -B clean site-deploy'
+      }
+      post {
+        always {
+          sh 'curl -s https://codecov.io/bash | bash -s - -t ${CODECOV_TOKEN}'
+        }
       }
     }
     stage('Release Site') {
@@ -65,6 +83,11 @@ pipeline {
       steps {
         sh 'mvn -B -P gh-pages-site clean site site:stage scm-publish:publish-scm'
       }
+      post {
+        always {
+          sh 'curl -s https://codecov.io/bash | bash -s - -t ${CODECOV_TOKEN}'
+        }
+      }
     }
     stage('Deploy Feature') {
       when {
@@ -75,6 +98,14 @@ pipeline {
       }
       steps {
         sh 'mvn -B -P feature,allow-features clean deploy'
+      }
+      post {
+        always {
+          junit '**/surefire-reports/*.xml'
+          jacoco(
+              execPattern: '**/coverage-reports/*.exec'
+          )
+        }
       }
     }
   }
