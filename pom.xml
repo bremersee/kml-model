@@ -7,12 +7,12 @@
   <parent>
     <groupId>org.bremersee</groupId>
     <artifactId>common-parent</artifactId>
-    <version>2.4.0</version>
+    <version>3.0.0-SNAPSHOT</version>
     <relativePath/>
   </parent>
 
   <artifactId>kml-model</artifactId>
-  <version>2.2.3-SNAPSHOT</version>
+  <version>3.0.0-SNAPSHOT</version>
   <name>OpenGIS KML Model</name>
   <inceptionYear>2019</inceptionYear>
   <url>https://github.com/bremersee/kml-model</url>
@@ -21,7 +21,7 @@
     <github.repo>kml-model</github.repo>
     <gh-pages-staging-dir>${project.build.directory}/staging</gh-pages-staging-dir>
 
-    <common-xml.version>2.5.0-SNAPSHOT</common-xml.version>
+    <common-xml.version>3.0.0-SNAPSHOT</common-xml.version>
   </properties>
 
   <developers>
@@ -130,6 +130,37 @@
     </resources>
 
     <plugins>
+      <!-- see: https://github.com/highsource/jaxb-tools -->
+      <plugin>
+        <groupId>org.jvnet.jaxb</groupId>
+        <artifactId>jaxb-maven-plugin</artifactId>
+        <version>4.0.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <extension>true</extension>
+          <args>
+            <arg>-Xinheritance</arg>
+          </args>
+          <plugins>
+            <plugin>
+              <groupId>org.jvnet.jaxb</groupId>
+              <artifactId>jaxb-plugins</artifactId>
+              <version>4.0.0</version>
+            </plugin>
+          </plugins>
+          <schemaDirectory>src/main/xsd</schemaDirectory>
+          <bindingDirectory>src/main/xjb</bindingDirectory>
+          <generateDirectory>${project.build.directory}/generated-sources/jaxb</generateDirectory>
+          <locale>en_GB</locale>
+        </configuration>
+      </plugin>
+      <!--
       <plugin>
         <groupId>org.jvnet.jaxb2.maven2</groupId>
         <artifactId>maven-jaxb2-plugin</artifactId>
@@ -166,6 +197,7 @@
           </dependency>
         </dependencies>
       </plugin>
+      -->
     </plugins>
   </build>
 
