@@ -4,11 +4,11 @@ pipeline {
   }
   environment {
     CODECOV_TOKEN = credentials('kml-model-codecov-token')
-    TEST = false
-    DEPLOY = false
-    SNAPSHOT_SITE = false
-    RELEASE_SITE = false
-    DEPLOY_FEATURE = false
+    TEST = true
+    DEPLOY = true
+    SNAPSHOT_SITE = true
+    RELEASE_SITE = true
+    DEPLOY_FEATURE = true
   }
   tools {
     jdk 'jdk17'

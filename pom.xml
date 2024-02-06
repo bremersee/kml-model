@@ -77,7 +77,7 @@
   <dependencies>
     <dependency>
       <groupId>org.bremersee</groupId>
-      <artifactId>common-xml-adapter</artifactId>
+      <artifactId>common-xml-modelling</artifactId>
       <version>${common-xml.version}</version>
     </dependency>
     <dependency>
