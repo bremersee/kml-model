@@ -1,5 +1,7 @@
 # OpenGIS KML Model
 
+[![codecov](https://codecov.io/gh/bremersee/kml-model/branch/develop/graph/badge.svg)](https://codecov.io/gh/bremersee/kml-model)
+
 A Java model of [KML 2.2 schema](http://www.opengis.net/kml/2.2)
 
 #### Maven Site
