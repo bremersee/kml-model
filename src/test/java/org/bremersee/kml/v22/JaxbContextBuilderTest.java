@@ -19,9 +19,9 @@ package org.bremersee.kml.v22;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import jakarta.xml.bind.JAXBException;
 import java.io.StringWriter;
 import java.util.ServiceLoader;
-import javax.xml.bind.JAXBException;
 import org.bremersee.opengis.kml.v22.Kml;
 import org.bremersee.xml.JaxbContextBuilder;
 import org.bremersee.xml.JaxbContextDataProvider;
