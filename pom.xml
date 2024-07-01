@@ -7,21 +7,48 @@
   <parent>
     <groupId>org.bremersee</groupId>
     <artifactId>common-parent</artifactId>
-    <version>1.1.2</version>
+    <version>3.0.0</version>
     <relativePath/>
   </parent>
 
   <artifactId>kml-model</artifactId>
-  <version>2.2.2</version>
+  <version>3.0.0</version>
   <name>OpenGIS KML Model</name>
+  <inceptionYear>2019</inceptionYear>
   <url>https://github.com/bremersee/kml-model</url>
 
   <properties>
     <github.repo>kml-model</github.repo>
     <gh-pages-staging-dir>${project.build.directory}/staging</gh-pages-staging-dir>
 
-    <common-xml.version>1.0.1</common-xml.version>
+    <common-xml.version>3.0.1</common-xml.version>
   </properties>
+
+  <developers>
+    <developer>
+      <id>bremersee</id>
+      <name>Christian Bremer</name>
+      <organization>bremersee.org</organization>
+      <organizationUrl>https://bremersee.org</organizationUrl>
+      <email>christian@bremersee.org</email>
+      <timezone>+1</timezone>
+      <roles>
+        <role>Developer</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <organization>
+    <name>bremersee.org</name>
+    <url>https://bremersee.org</url>
+  </organization>
+
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+    </license>
+  </licenses>
 
   <scm>
     <url>https://github.com/bremersee/kml-model</url>
@@ -50,7 +77,7 @@
   <dependencies>
     <dependency>
       <groupId>org.bremersee</groupId>
-      <artifactId>common-xml</artifactId>
+      <artifactId>common-xml-modelling</artifactId>
       <version>${common-xml.version}</version>
     </dependency>
     <dependency>
@@ -59,6 +86,12 @@
       <scope>runtime</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.bremersee</groupId>
+      <artifactId>common-xml</artifactId>
+      <version>${common-xml.version}</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
@@ -97,10 +130,11 @@
     </resources>
 
     <plugins>
+      <!-- see: https://github.com/highsource/jaxb-tools -->
       <plugin>
-        <groupId>org.jvnet.jaxb2.maven2</groupId>
-        <artifactId>maven-jaxb2-plugin</artifactId>
-        <version>0.14.0</version>
+        <groupId>org.jvnet.jaxb</groupId>
+        <artifactId>jaxb-maven-plugin</artifactId>
+        <version>4.0.0</version>
         <executions>
           <execution>
             <goals>
@@ -113,67 +147,20 @@
           <args>
             <arg>-Xinheritance</arg>
           </args>
+          <plugins>
+            <plugin>
+              <groupId>org.jvnet.jaxb</groupId>
+              <artifactId>jaxb-plugins</artifactId>
+              <version>4.0.0</version>
+            </plugin>
+          </plugins>
           <schemaDirectory>src/main/xsd</schemaDirectory>
           <bindingDirectory>src/main/xjb</bindingDirectory>
           <generateDirectory>${project.build.directory}/generated-sources/jaxb</generateDirectory>
           <locale>en_GB</locale>
-          <plugins>
-            <plugin>
-              <groupId>org.jvnet.jaxb2_commons</groupId>
-              <artifactId>jaxb2-basics</artifactId>
-              <version>0.11.1</version>
-            </plugin>
-          </plugins>
         </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-jxc-jdk9</artifactId>
-            <version>2.3.0.1</version>
-          </dependency>
-          <dependency>
-            <groupId>javax.activation</groupId>
-            <artifactId>javax.activation-api</artifactId>
-            <version>1.2.0</version>
-          </dependency>
-        </dependencies>
       </plugin>
-
-      <!--
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>jaxb2-maven-plugin</artifactId>
-        <version>2.4</version>
-        <executions>
-          <execution>
-            <id>xjc</id>
-            <goals>
-              <goal>xjc</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <target>2.1</target>
-          <xsdPathWithinArtifact>
-            META-INF/JAXB/xsd
-          </xsdPathWithinArtifact>
-          <locale>en_GB</locale>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-jxc-jdk9</artifactId>
-            <version>2.3.0.1</version>
-          </dependency>
-          <dependency>
-            <groupId>javax.activation</groupId>
-            <artifactId>javax.activation-api</artifactId>
-            <version>1.2.0</version>
-          </dependency>
-        </dependencies>
-      </plugin>
-      -->
     </plugins>
   </build>
-  
+
 </project>

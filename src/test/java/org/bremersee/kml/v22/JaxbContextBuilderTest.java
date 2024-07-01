@@ -1,5 +1,5 @@
 /*
- * Copyright 2018-2020 the original author or authors.
+ * Copyright 2019-2022 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,9 @@ package org.bremersee.kml.v22;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import jakarta.xml.bind.JAXBException;
 import java.io.StringWriter;
 import java.util.ServiceLoader;
-import javax.xml.bind.JAXBException;
 import org.bremersee.opengis.kml.v22.Kml;
 import org.bremersee.xml.JaxbContextBuilder;
 import org.bremersee.xml.JaxbContextDataProvider;
@@ -47,7 +47,7 @@ class JaxbContextBuilderTest {
    */
   @BeforeAll
   static void createJaxbContextBuilder() {
-    jaxbContextBuilder = JaxbContextBuilder.builder()
+    jaxbContextBuilder = JaxbContextBuilder.newInstance()
         .withSchemaMode(SchemaMode.ALWAYS)
         .processAll(ServiceLoader.load(JaxbContextDataProvider.class));
   }
