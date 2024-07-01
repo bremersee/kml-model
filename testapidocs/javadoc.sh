@@ -1,1 +1,1 @@
-/usr/lib/jvm/java-8-openjdk-amd64/jre/../bin/javadoc @options @packages
+/usr/lib/jvm/java-17-openjdk-amd64/bin/javadoc @options @packages
