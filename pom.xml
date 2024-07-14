@@ -7,12 +7,12 @@
   <parent>
     <groupId>org.bremersee</groupId>
     <artifactId>common-parent</artifactId>
-    <version>3.0.0</version>
+    <version>3.1.1</version>
     <relativePath/>
   </parent>
 
   <artifactId>kml-model</artifactId>
-  <version>3.0.0</version>
+  <version>3.1.0</version>
   <name>OpenGIS KML Model</name>
   <inceptionYear>2019</inceptionYear>
   <url>https://github.com/bremersee/kml-model</url>
@@ -21,7 +21,7 @@
     <github.repo>kml-model</github.repo>
     <gh-pages-staging-dir>${project.build.directory}/staging</gh-pages-staging-dir>
 
-    <common-xml.version>3.0.1</common-xml.version>
+    <common-xml.version>3.1.0</common-xml.version>
   </properties>
 
   <developers>
